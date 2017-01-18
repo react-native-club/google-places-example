@@ -36,7 +36,7 @@ class Example extends Component {
           fetchDetails={true}
           onPress={(data, details) => this.onPlaceSearch(data, details)}
           query={{
-            types: '(regions)',
+            types: [ "establishment", "geocode" ],
             key: 'AIzaSyBlXzW_f3mZD6bOVIsP6bsHhvcICbLD2PQ',
             language: 'en'
           }}
