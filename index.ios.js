@@ -5,28 +5,59 @@
  */
 
 import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { AppRegistry, StyleSheet, View, Dimensions } from 'react-native';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
-export default class GooglePlacesExample extends Component {
+const windowSize = Dimensions.get('window');
+const deviceWidth = windowSize.width;
+const deviceHeight = windowSize.height;
+
+import { API_KEY } from './keys';
+
+class Example extends Component {
+
+  constructor (props) {
+    super (props);
+
+    this.onPlaceSearch = this.onPlaceSearch.bind(this);
+  }
+
+  onPlaceSearch (data, details) {
+    console.log('DATA', data);
+    console.log('DETAILS', details);
+  }
+
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
+      <View style={{ flex: 1, marginTop: 50}}>
+        <GooglePlacesAutocomplete
+          enablePoweredByContainer={false}
+          placeholder="Search"
+          minLength={2}
+          autoFocus={false}
+          fetchDetails={true}
+          onPress={(data, details) => this.onPlaceSearch(data, details)}
+          query={{
+            types: [ "establishment", "geocode" ],
+            key: API_KEY,
+            language: 'en'
+          }}
+          styles={{
+            textInputContainer: {
+              backgroundColor: 'rgba(0,0,0,0)'
+            },
+            listView: {
+              height: deviceHeight,
+              width: deviceWidth,
+              position: 'absolute',
+              top: 40
+            }
+          }}
+          nearbyPlacesAPI={'GooglePlacesSearch'}
+          filterReverseGeocodingByTypes={['locality', 'administrative_area_level_3']}
+        >
+      </GooglePlacesAutocomplete>
+    </View>
     );
   }
 }
@@ -34,20 +65,8 @@ export default class GooglePlacesExample extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  }
 });
 
-AppRegistry.registerComponent('GooglePlacesExample', () => GooglePlacesExample);
+AppRegistry.registerComponent('GooglePlacesExample', () => Example);
