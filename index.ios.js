@@ -12,6 +12,8 @@ const windowSize = Dimensions.get('window');
 const deviceWidth = windowSize.width;
 const deviceHeight = windowSize.height;
 
+import { API_KEY } from './keys';
+
 class Example extends Component {
 
   constructor (props) {
@@ -37,7 +39,7 @@ class Example extends Component {
           onPress={(data, details) => this.onPlaceSearch(data, details)}
           query={{
             types: [ "establishment", "geocode" ],
-            key: 'AIzaSyBlXzW_f3mZD6bOVIsP6bsHhvcICbLD2PQ',
+            key: API_KEY,
             language: 'en'
           }}
           styles={{
